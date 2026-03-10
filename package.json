@@ -1,0 +1,20 @@
+{
+  "name": "cse-341-project-1",
+  "version": "1.0.0",
+  "description": "My First Project",
+  "homepage": "https://github.com/darma2006/CSE-341-Project-1#readme",
+  "bugs": {
+    "url": "https://github.com/darma2006/CSE-341-Project-1/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darma2006/CSE-341-Project-1.git"
+  },
+  "license": "ISC",
+  "author": "Darma Lopez",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
