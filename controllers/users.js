@@ -1,8 +1,8 @@
-const { create } = require('db/mariadb');
 const mongodb =require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
 
 const getALL = async (requestAnimationFrame, res) => {
+    //#swagger.tags=['Users']
     const result = await mongodb.getDatabase().db().collection('users').find();
     result.toArray().then((users) => {
         res.setHeader('Content-Type', 'application/json');
@@ -20,24 +20,28 @@ const getSingle =async (requestAnimationFrame, res) => {
 };
 
 const createUser = async (req, res) => {
-    const userId = new ObjectId(req.paramas.id);
+    //#swagger.tags=['Users']
     const user = {
-        firsName: req.body.firstName,
+        firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
-        favoriteColor: req.bodyfavoriteColor,
+        favoriteColor: req.body.favoriteColor,
         birthday: req.body.birthday
     };
-    const response = await mongodb.getDatabase().db().collection('users').insertOne(user);
-    if (response.modifiedCount > 0) {
-        res.status(204).send();
-    } else {
-        res.status(500).json(response.error || 'Some error ocurred while updating the user.');
-    }
+
+    const response = await mongodb
+        .getDatabase()
+        .db()
+        .collection('users')
+        .insertOne(user);
+
+    res.status(201).json({ id: response.insertedId });
 };
 
+
 const updateUser = async (req, res) => {
-    const userId = new ObjectId(req.paramas.id);
+    //#swagger.tags=['Users']
+    const userId = new ObjectId(req.params.id);
     const user = {
         username: req.body.username,
         email: req.body.email,
@@ -53,8 +57,9 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-    const userId = new ObjectId(req.paramas.id);
-    const response = await mongodb.getDatabase().db().collection('users').remove({ _id: userId });
+    //#swagger.tags=['Users']
+    const userId = new ObjectId(req.params.id);
+    const response = await mongodb.getDatabase().db().collection('users').deleteOne({ _id: userId });
     if (response.modifiedCount > 0) {
         res.status(204).send();
     } else {
